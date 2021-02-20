@@ -4,15 +4,15 @@
       <div class="px-4 px-md-0 mb-3">
         <router-link :to="{ name: 'home' }" class="text-gray">
           <Icon name="back" size="22" class="v-align-middle" />
-          Home
+          首页
         </router-link>
       </div>
       <div class="px-4 px-md-0">
-        <h1 v-if="loaded" v-text="'Settings'" class="mb-4" />
+        <h1 v-if="loaded" v-text="'设置空间'" class="mb-4" />
         <PageLoading v-else />
       </div>
       <template v-if="loaded">
-        <Block title="ENS">
+        <Block title="注册空间合约">
           <UiButton class="d-flex width-full mb-2">
             <input
               readonly
@@ -223,7 +223,7 @@
 import { mapActions } from 'vuex';
 import { getAddress } from '@ethersproject/address';
 import { ipfsGet } from 'hecovote.js/src/utils';
-import { validateSchema } from 'hecovote.js/src/utils';
+import { validateSchema,call } from 'hecovote.js/src/utils';
 import schemas from 'hecovote.js/src/schemas';
 import getProvider from 'hecovote.js/src/utils/provider';
 import { resolveContent } from 'hecovote.js/src/utils/contentHash';
@@ -266,9 +266,11 @@ export default {
       const address = this.web3.account
         ? getAddress(this.web3.account)
         : '<your-address>';
-      return `ipns://storage.snapshot.page/registry/${address}/${this.key}`;
+      return `ipns://storage.hecovote.com/registry/${address}/${this.key}`;
     },
     isReady() {
+
+      console.log('spaceExist==================',this.spaceExist)
       console.log('currentContenthash==================',this.currentContenthash)
       console.log('contenthash==================',this.contenthash)
       // return this.currentContenthash === this.contenthash;
@@ -276,7 +278,35 @@ export default {
     }
   },
   async created() {
-    console.log("getProvider('128')",getProvider('128'))
+    try {
+      const provider = this.key.includes('.heco') ? getProvider('128') : getProvider('256')
+      const contractAddress = this.key.includes('.heco') ? '0xC403190d6155cd2A44fBe80A09c23cf3707B1B69' : '0xB14C5711db68081C52C5Bf6825741Bd28B3255d1'
+      const abi = [ {
+        inputs: [{
+          internalType: "string",
+          name: "name",
+          type: "string"
+        }],
+        name: "spaceExist",
+        outputs: [{
+          internalType: "bool",
+          name: "",
+          type: "bool"
+        }],
+        stateMutability: "view",
+        type: "function"
+      }]
+      console.log('this.contractAddress',contractAddress)
+      const result = await call(provider, abi, [
+        contractAddress.toLowerCase(),
+        'spaceExist'
+        [this.key]
+      ]);
+      console.log(result)
+      this.spaceExist = result;
+    } catch (e) {
+      console.log('spaceExist err:',e);
+    }
     try {
       const { protocolType, decoded } = await resolveContent(
         getProvider('128'),

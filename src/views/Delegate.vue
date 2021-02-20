@@ -172,8 +172,8 @@ export default {
       this.loading = true;
       try {
         let address = this.form.address;
-        if (address.includes('.eth'))
-          address = await getProvider('1').resolveName(address);
+        if (address.includes('.heco'))
+          address = await getProvider('128').resolveName(address);
         const tx = await sendTransaction(
           this.$auth.web3,
           contractAddress,
