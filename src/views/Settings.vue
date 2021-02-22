@@ -12,7 +12,7 @@
         <PageLoading v-else />
       </div>
       <template v-if="loaded">
-        <Block title="注册空间合约">
+        <!-- <Block title="注册空间合约">
           <UiButton class="d-flex width-full mb-2">
             <input
               readonly
@@ -41,9 +41,9 @@
               <Icon name="external-link" class="ml-1" />
             </UiButton>
           </a>
-        </Block>
+        </Block> -->
         <div v-if="isReady">
-          <Block title="Profile">
+          <Block title="基本资料">
             <div class="mb-2">
               <a
                 :href="
@@ -52,42 +52,45 @@
                 target="_blank"
               >
                 <UiButton class="width-full mb-2">
-                  Change avatar
+                  上传Logo,文件名为space.png
                   <Icon name="external-link" class="ml-1" />
                 </UiButton>
               </a>
               <UiButton class="text-left width-full mb-2 d-flex px-3">
-                <div class="text-gray mr-2">Name</div>
+                <div class="text-gray mr-2">项目名称</div>
                 <input v-model="form.name" class="input flex-auto" required />
               </UiButton>
-              <UiButton
+              <!-- <UiButton
                 @click="modalNetworksOpen = true"
                 class="text-left width-full mb-2 d-flex px-3"
-              >
-                <div class="text-gray mr-2">Network</div>
+              > -->
+              <UiButton class="text-left width-full mb-2 d-flex px-3">
+                <div class="text-gray mr-2">所在网络</div>
                 <div class="flex-auto">
                   {{
                     form.network
                       ? networks[form.network].name
-                      : 'Select network'
+                      : key.includes('.heco')
+                      ? networks[128].name
+                      : networks[256].name
                   }}
                 </div>
               </UiButton>
               <UiButton class="text-left width-full mb-2 d-flex px-3">
-                <div class="text-gray mr-2">Symbol</div>
+                <div class="text-gray mr-2">符号</div>
                 <input v-model="form.symbol" class="input flex-auto" required />
               </UiButton>
               <UiButton
                 @click="modalSkinsOpen = true"
                 class="text-left width-full mb-2 d-flex px-3"
               >
-                <div class="text-gray mr-2">Skin</div>
+                <div class="text-gray mr-2">主题颜色</div>
                 <div class="flex-auto">
-                  {{ form.skin ? form.skin : 'Default skin' }}
+                  {{ form.skin ? form.skin : '默认主题' }}
                 </div>
               </UiButton>
-              <UiButton class="text-left width-full mb-2 d-flex px-3">
-                <div class="text-gray mr-2">Domain name</div>
+              <!-- <UiButton class="text-left width-full mb-2 d-flex px-3">
+                <div class="text-gray mr-2">域名</div>
                 <input v-model="form.domain" class="input flex-auto" />
                 <a
                   class="d-block py-1 mr-n2"
@@ -96,10 +99,10 @@
                 >
                   <Icon name="info" size="24" class="text-gray p-1" />
                 </a>
-              </UiButton>
+              </UiButton> -->
             </div>
           </Block>
-          <Block title="Strategies">
+          <Block title="治理策略">
             <div
               v-for="(strategy, i) in form.strategies"
               :key="i"
@@ -119,52 +122,53 @@
               </a>
             </div>
             <UiButton @click="handleAddStrategy" class="d-block width-full">
-              Add strategy
+              添加策略
             </UiButton>
           </Block>
-          <Block title="Members">
-            <UiButton class="d-block width-full px-3" style="height: auto;">
+          <Block title="核心成员">
+            <UiButton class="d-block width-full px-3" style="height: auto">
               <TextareaArray
                 v-model="form.members"
                 :placeholder="
                   `0x8C28Cf33d9Fd3D0293f963b1cd27e3FF422B425c\n0xeF8305E140ac520225DAf050e2f71d5fBcC543e7`
                 "
                 class="input width-full text-left"
-                style="font-size: 18px;"
+                style="font-size: 18px"
               />
             </UiButton>
           </Block>
-          <Block title="Filters">
+          <Block title="选项">
             <div class="mb-2">
               <UiButton class="text-left width-full mb-2 d-flex px-3">
-                <div class="text-gray mr-2">Default tab</div>
+                <div class="text-gray mr-2">默认标签</div>
                 <input
                   v-model="form.filters.defaultTab"
                   class="input flex-auto"
+                  :placeholder="`&quot;all&quot; &quot;core&quot; 或 &quot;community&quot;`"
                 />
               </UiButton>
               <UiButton class="text-left width-full mb-2 d-flex px-3">
-                <div class="text-gray mr-2">Min. score</div>
+                <div class="text-gray mr-2">发起提案最小Token数量</div>
                 <div class="flex-auto">
                   <InputNumber v-model="form.filters.minScore" class="input" />
                 </div>
               </UiButton>
               <UiButton class="text-left width-full mb-2 d-flex px-3">
-                <div class="text-gray mr-2">Only members</div>
+                <div class="text-gray mr-2">只能核心成员发其提案</div>
                 <Checkbox
                   v-model="form.filters.onlyMembers"
                   class="input flex-auto"
                   :placeholder="`&quot;yes&quot; or &quot;no&quot;`"
                 />
               </UiButton>
-              <UiButton class="d-block width-full px-3" style="height: auto;">
+              <UiButton class="d-block width-full px-3" style="height: auto">
                 <TextareaArray
                   v-model="form.filters.invalids"
                   :placeholder="
-                    `Invalids proposals\nQmc4VSHwY3SVmo4oofhL2qDPaYcGaQqndM4oqdQQe2aZHQ\nQmTMAgnPy2q6LRMNwvj27PHvWEgZ3bw7yTtNNEucBZCWhZ`
+                    `隐藏的提案 \nQmc4VSHwY3SVmo4oofhL2qDPaYcGaQqndM4oqdQQe2aZHQ\nQmTMAgnPy2q6LRMNwvj27PHvWEgZ3bw7yTtNNEucBZCWhZ`
                   "
                   class="input width-full text-left"
-                  style="font-size: 18px;"
+                  style="font-size: 18px"
                 />
               </UiButton>
             </div>
@@ -183,9 +187,9 @@
       </template>
     </template>
     <template v-if="loaded && isReady" #sidebar-right>
-      <Block title="Actions">
+      <Block title="动作">
         <UiButton @click="handleReset" class="d-block width-full mb-2">
-          Reset
+          重置
         </UiButton>
         <UiButton
           @click="handleSubmit"
@@ -193,7 +197,7 @@
           :loading="loading"
           class="d-block width-full button--submit"
         >
-          Save
+          保存
         </UiButton>
       </Block>
     </template>
@@ -222,16 +226,21 @@
 <script>
 import { mapActions } from 'vuex';
 import { getAddress } from '@ethersproject/address';
-import { ipfsGet } from 'hecovote.js/src/utils';
-import { validateSchema,call } from 'hecovote.js/src/utils';
+// import { ipfsGet } from 'hecovote.js/src/utils';
+// import getProvider from 'hecovote.js/src/utils/provider';
+// import { resolveContent } from 'hecovote.js/src/utils/contentHash';
+import {
+  validateSchema,
+  getSpace,
+  getSpaceExist,
+  fleekGet
+} from 'hecovote.js/src/utils';
 import schemas from 'hecovote.js/src/schemas';
-import getProvider from 'hecovote.js/src/utils/provider';
-import { resolveContent } from 'hecovote.js/src/utils/contentHash';
 import networks from 'hecovote.js/src/networks.json';
-import gateways from 'hecovote.js/src/gateways.json';
 import { clone } from '@/helpers/utils';
+// import gateways from 'hecovote.js/src/gateways.json';
 
-const gateway = process.env.VUE_APP_IPFS_GATEWAY || gateways[0];
+// const gateway = process.env.VUE_APP_IPFS_GATEWAY || gateways[0];
 
 export default {
   data() {
@@ -269,57 +278,33 @@ export default {
       return `ipns://storage.hecovote.com/registry/${address}/${this.key}`;
     },
     isReady() {
-
-      console.log('spaceExist==================',this.spaceExist)
-      console.log('currentContenthash==================',this.currentContenthash)
-      console.log('contenthash==================',this.contenthash)
       // return this.currentContenthash === this.contenthash;
       return true;
     }
   },
   async created() {
     try {
-      const provider = this.key.includes('.heco') ? getProvider('128') : getProvider('256')
-      const contractAddress = this.key.includes('.heco') ? '0xC403190d6155cd2A44fBe80A09c23cf3707B1B69' : '0xB14C5711db68081C52C5Bf6825741Bd28B3255d1'
-      const abi = [ {
-        inputs: [{
-          internalType: "string",
-          name: "name",
-          type: "string"
-        }],
-        name: "spaceExist",
-        outputs: [{
-          internalType: "bool",
-          name: "",
-          type: "bool"
-        }],
-        stateMutability: "view",
-        type: "function"
-      }]
-      console.log('this.contractAddress',contractAddress)
-      const result = await call(provider, abi, [
-        contractAddress.toLowerCase(),
-        'spaceExist'
-        [this.key]
-      ]);
-      console.log(result)
-      this.spaceExist = result;
+      // const { protocolType, decoded } = await resolveContent(
+      //   getProvider('128'),
+      //   this.key
+      // );
+      // this.currentContenthash = `${protocolType}://${decoded}`;
+      // const space = await ipfsGet(gateway, decoded, protocolType);
+      // space.filters = space.filters || {};
+      // space.strategies = space.strategies || [];
+      // this.currentSettings = clone(space);
+      // this.form = space;
+      const spaceExist = await getSpaceExist(this.key);
+      if (spaceExist) {
+        const ownerAddress = await getSpace(this.key);
+        const space = await fleekGet(ownerAddress, this.key);
+        space.filters = space.filters || {};
+        space.strategies = space.strategies || [];
+        this.currentSettings = clone(space);
+        this.form = space;
+      }
     } catch (e) {
-      console.log('spaceExist err:',e);
-    }
-    try {
-      const { protocolType, decoded } = await resolveContent(
-        getProvider('128'),
-        this.key
-      );
-      this.currentContenthash = `${protocolType}://${decoded}`;
-      const space = await ipfsGet(gateway, decoded, protocolType);
-      space.filters = space.filters || {};
-      space.strategies = space.strategies || [];
-      this.currentSettings = clone(space);
-      this.form = space;
-    } catch (e) {
-      console.log('created err:',e);
+      console.log('created err:', e);
     }
     if (this.from) {
       const from = clone(this.app.spaces[this.from]);

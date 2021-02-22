@@ -31,6 +31,7 @@
         <UiButton
           :disabled="!id.includes('.heco') && !id.includes('.test')"
           @click="handleSubmit"
+          :loading="loading"
           class="button--submit width-full"
         >
           下一步
@@ -41,15 +42,33 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { getSpace, getSpaceExist } from 'hecovote.js/src/utils';
 export default {
   data() {
     return {
-      id: ''
+      id: '',
+      loading: false
     };
   },
   methods: {
-    handleSubmit() {
-      this.$router.push({ name: 'settings', params: { key: this.id } });
+    ...mapActions(['notify']),
+    async handleSubmit() {
+      this.loading = true;
+      const spaceExist = await getSpaceExist(this.id);
+      if (spaceExist) {
+        const result = await getSpace(this.id);
+        if (result.toLowerCase() === this.web3.account.toLowerCase()) {
+          this.loading = false;
+          this.$router.push({ name: 'settings', params: { key: this.id } });
+        } else {
+          this.notify('空间已被注册,钱包地址不是注册的地址!');
+        }
+      } else {
+        this.loading = false;
+        this.notify('空间未被注册');
+        // this.$router.push({ name: 'settings', params: { key: this.id } });
+      }
     }
   }
 };

@@ -245,6 +245,7 @@ export default {
         space: this.space,
         id: this.id
       });
+      console.log('proposalObj',proposalObj);
       this.proposal = proposalObj.proposal;
       this.votes = proposalObj.votes;
       this.results = proposalObj.results;

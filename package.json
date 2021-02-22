@@ -4,7 +4,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@ensdomains/content-hash": "^2.5.3",
@@ -36,8 +37,9 @@
     "eslint": "^6.7.2",
     "ethereumjs-util": "^7.0.7",
     "fortmatic": "^2.0.6",
+    "gh-pages": "^3.1.0",
     "hecovote-spaces": "github:go-protocol/hecovote-spaces#main",
-    "hecovote.js": "^0.1.7",
+    "hecovote.js": "^0.1.27",
     "jsonexport": "^3.0.1",
     "lodash": "^4.17.15",
     "numeral": "^2.0.4",
@@ -78,5 +80,5 @@
     "sass-loader": "^8.0.2"
   },
   "license": "MIT",
-  "repository": "balancer-labs/snapshot"
+  "repository": "go-protocol/hecovote-interface"
 }

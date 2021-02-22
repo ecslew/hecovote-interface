@@ -12,16 +12,17 @@
     </div>
     <div>
       <span v-text="`#${i.slice(0, 7)}`" />
-      By {{ _shorten(proposal.address) }}
+      作者: {{ _shorten(proposal.address) }}
       <Badges :address="proposal.address" :space="space" />
+      持有:
       <span
         v-if="proposal.score"
         v-text="`${_n(proposal.score)} ${space.symbol}`"
         class="ml-1"
       />
-      start
+      开始时间:
       <span v-text="$d(proposal.msg.payload.start * 1e3)" />
-      end
+      结束时间:
       <span v-text="$d(proposal.msg.payload.end * 1e3)" />
     </div>
   </router-link>

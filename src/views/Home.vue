@@ -4,13 +4,13 @@
       <Container class="d-flex flex-items-center">
         <div class="flex-auto text-left">
           <UiButton class="pl-3 col-12 col-lg-4">
-            <Search v-model="q" placeholder="Search" />
+            <Search v-model="q" placeholder="搜索" />
           </UiButton>
         </div>
         <div class="ml-3 text-right hide-sm">
-          {{ _n(spaces.length) }} space(s)
+          {{ _n(spaces.length) }} 个空间
           <router-link :to="{ name: 'setup' }" class="hide-md ml-3">
-            <UiButton>Create space</UiButton>
+            <UiButton>创建空间</UiButton>
           </router-link>
         </div>
       </Container>

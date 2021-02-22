@@ -6,7 +6,7 @@
           <div v-text="space.name" />
           <div class="d-flex flex-items-center flex-auto">
             <h2 class="mr-2">
-              Proposals
+              提案列表
               <UiCounter
                 :counter="Object.keys(proposalsWithFilter).length"
                 class="ml-1"
@@ -18,7 +18,7 @@
           v-if="$auth.isAuthenticated.value"
           :to="{ name: 'create', params: { key } }"
         >
-          <UiButton>New proposal</UiButton>
+          <UiButton>创建提案</UiButton>
         </router-link>
         <router-link
           v-if="isMember && isEns"
@@ -39,7 +39,7 @@
           <router-link
             v-for="state in states"
             :key="state"
-            v-text="state"
+            v-text="tabs[state]"
             :to="`/${key}/${state}`"
             :class="tab === state && 'text-white'"
             class="mr-3 text-gray tab"
@@ -61,7 +61,7 @@
           v-if="loaded && Object.keys(proposalsWithFilter).length === 0"
           class="p-4 m-0 border-top d-block"
         >
-          There aren't any proposals here yet!
+          这里还没有任何提案!
         </p>
       </Block>
     </Container>
@@ -78,7 +78,15 @@ export default {
       loading: false,
       loaded: false,
       proposals: {},
-      tab: 'all'
+      tab: 'all',
+      tabs : {
+        'all' : '全部提案',
+        'core' : '核心团队',
+        'community' : '社区提案',
+        'active' : '进行中',
+        'pending' : '未开始',
+        'closed' : '已关闭'
+      }
     };
   },
   computed: {
@@ -121,7 +129,7 @@ export default {
       );
     },
     isEns() {
-      return this.key.includes('.eth') || this.key.includes('.xyz');
+      return this.key.includes('.heco') || this.key.includes('.test');
     }
   },
   methods: {

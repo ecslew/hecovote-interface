@@ -1,7 +1,7 @@
 <template>
   <UiModal :open="open" @close="$emit('close')">
     <template v-slot:header>
-      <h3>{{ strategy.name ? 'Edit' : 'Add' }} strategy</h3>
+      <h3>{{ strategy.name ? '编辑' : '添加' }} 策略</h3>
     </template>
     <div class="mt-4 mx-0 mx-md-4">
       <div v-if="input.name" class="p-4 mb-4 border rounded-2 text-white">

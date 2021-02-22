@@ -26,11 +26,11 @@ export default {
   background-color: transparent;
   color: var(--link-color);
   border-radius: 23px;
-  padding: 0 24px;
+  padding: 0 18px;
   outline: none;
-  line-height: 46px;
-  height: 46px;
-  font-size: 18px;
+  line-height: 38px;
+  height: 36px;
+  font-size: 16px;
 
   &.button--submit {
     color: white;

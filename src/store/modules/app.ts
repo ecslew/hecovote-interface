@@ -1,10 +1,7 @@
 import { getProfiles } from '@/helpers/profile';
 import { getInstance } from '@snapshot-labs/lock/plugins/vue3';
 import { ipfsGet, getScores } from 'hecovote.js/src/utils';
-import {
-  getBlockNumber,
-  signMessage
-} from 'hecovote.js/src/utils/web3';
+import { getBlockNumber, signMessage } from 'hecovote.js/src/utils/web3';
 import getProvider from 'hecovote.js/src/utils/provider';
 import gateways from 'hecovote.js/src/gateways.json';
 import client from '@/helpers/client';
@@ -129,10 +126,10 @@ const actions = {
     try {
       let proposals: any = await client.request(`${space.key}/proposals`);
       if (proposals && !space.filters?.onlyMembers) {
-      console.log('space.key',space.key);
-      console.log('space.strategies',space.strategies);
-      console.log('space.network',space.network);
-      console.log('getProvider(space.network)',getProvider(space.network));
+        console.log('space.key', space.key);
+        console.log('space.strategies', space.strategies);
+        console.log('space.network', space.network);
+        console.log('getProvider(space.network)', getProvider(space.network));
         const scores: any = await getScores(
           space.key,
           space.strategies,
@@ -178,12 +175,13 @@ const actions = {
 
       /* Get scores */
       console.time('getProposal.scores');
-      console.log('space.key',space.key);
-      console.log('space.strategies',space.strategies);
-      console.log('space.network',space.network);
-      console.log('getProvider(space.network)',getProvider(space.network));
-      console.log('voters',voters);
-      console.log('blockTag',blockTag);
+      console.log('proposal', proposal);
+      console.log('space.key', space.key);
+      console.log('space.strategies', space.strategies);
+      console.log('space.network', space.network);
+      console.log('getProvider(space.network)', getProvider(space.network));
+      console.log('voters', voters);
+      console.log('blockTag', blockTag);
       const [scores, profiles]: any = await Promise.all([
         getScores(
           space.key,
@@ -255,12 +253,12 @@ const actions = {
     try {
       const blockNumber = await getBlockNumber(getProvider(space.network));
       const blockTag = snapshot > blockNumber ? 'latest' : parseInt(snapshot);
-      console.log('space.key',space.key);
-      console.log('space.strategies',space.strategies);
-      console.log('space.network',space.network);
-      console.log('getProvider(space.network)',getProvider(space.network));
-      console.log('address',address);
-      console.log('blockTag',blockTag);
+      console.log('space.key', space.key);
+      console.log('space.strategies', space.strategies);
+      console.log('space.network', space.network);
+      console.log('getProvider(space.network)', getProvider(space.network));
+      console.log('address', address);
+      console.log('blockTag', blockTag);
       let scores: any = await getScores(
         space.key,
         space.strategies,
