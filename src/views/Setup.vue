@@ -12,7 +12,9 @@
       </div>
       <Block>
         <div class="mb-3">
-          使用一个.heco后缀的空间名称开始,Heco测试网使用.test后缀
+          使用一个.heco后缀的空间名称开始,Heco测试网使用.test后缀;空间购买合约地址为<a href="https://hecoinfo.com/address/0xC403190d6155cd2A44fBe80A09c23cf3707B1B69#writeContract">0xC403190d6155cd2A44fBe80A09c23cf3707B1B69</a>
+          购买空间需要通过<a href="https://goswap.app/#/swap?inputCurrency=0x0298c2b32eae4da002a15f36fdf7615bea3da047&outputCurrency=0x271B54EBe36005A7296894F819D626161C44825C">GOC代币</a>,
+          目前象征性收取10GOC或等值HUSD
         </div>
         <UiButton class="text-left width-full mb-3 d-flex px-3">
           <input
