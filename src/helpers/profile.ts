@@ -66,8 +66,8 @@ export async function getProfiles(addresses) {
   let _3BoxProfiles: any = {};
   try {
     [ensNames, _3BoxProfiles] = await Promise.all([
-      lookupAddresses(addresses),
-      get3BoxProfiles(addresses)
+      // lookupAddresses(addresses),
+      // get3BoxProfiles(addresses)
     ]);
   } catch (e) {
     console.log(e);
